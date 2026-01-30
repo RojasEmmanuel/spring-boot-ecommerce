@@ -35,7 +35,7 @@ public class Compra {
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
-    @OneToMany (mappedBy = "compra")
+    @OneToMany (mappedBy = "compra", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<ItemCompra> carrito;
 }
