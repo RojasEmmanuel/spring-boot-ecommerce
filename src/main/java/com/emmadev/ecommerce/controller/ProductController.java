@@ -1,5 +1,6 @@
 package com.emmadev.ecommerce.controller;
 
+import com.emmadev.ecommerce.DTO.ProductResponseDTO;
 import com.emmadev.ecommerce.DTO.ProductoCreateDTO;
 import com.emmadev.ecommerce.DTO.ProductoPublicResponseDTO;
 import com.emmadev.ecommerce.DTO.ProductoUpdateDTO;
@@ -22,6 +23,13 @@ public class ProductController {
         return service.findProductos();
     }
 
+
+    @GetMapping
+    public List<ProductResponseDTO> getAllProducto(){
+        return service.getAllProducts();
+    }
+
+
     @PostMapping
     public void registrarProducto(@Valid @RequestBody ProductoCreateDTO dto){
         service.registrarProducto(dto);
@@ -30,5 +38,10 @@ public class ProductController {
     @PostMapping("/update")
     public ProductoUpdateDTO actualizarProducto(@Valid @RequestBody ProductoUpdateDTO dto){
         return service.updateProducto(dto);
+    }
+
+    @DeleteMapping("/{idProducto}")
+    public void eliminarProducto(@PathVariable Long idProducto){
+        service.eliminarProducto(idProducto);
     }
 }

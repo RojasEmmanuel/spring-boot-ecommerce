@@ -1,5 +1,6 @@
 package com.emmadev.ecommerce.service;
 
+import com.emmadev.ecommerce.DTO.ProductResponseDTO;
 import com.emmadev.ecommerce.DTO.ProductoCreateDTO;
 import com.emmadev.ecommerce.DTO.ProductoPublicResponseDTO;
 import com.emmadev.ecommerce.DTO.ProductoUpdateDTO;
@@ -28,6 +29,21 @@ public class ProductoService {
                     producto.getCategoria() != null ?
                             producto.getCategoria().getNombre():null,
                     producto.getExistencia()
+            )
+        ).toList();
+    }
+
+    public List<ProductResponseDTO> getAllProducts(){
+        return repository.findAll().stream().map(
+            producto -> new ProductResponseDTO(
+                    producto.getNombre(),
+                    producto.getPrecioCompra(),
+                    producto.getPrecioVenta(),
+                    producto.getCategoria() != null ?
+                            producto.getCategoria().getNombre():null,
+                    producto.getExistencia(),
+                    producto.getOperacion(),
+                    producto.getUltimaModificacion()
             )
         ).toList();
     }
@@ -64,5 +80,13 @@ public class ProductoService {
         p.setPrecioVenta(dto.getPrecioVenta());
         p.setPrecioCompra(dto.getPrecioCompra());
         return dto;
+    }
+
+    public void eliminarProducto(Long idProducto){
+        if(!repository.existsById(idProducto)){
+            throw new RuntimeException("Este producto no existe en la base de datos");
+        }
+
+        repository.deleteById(idProducto);
     }
 }
