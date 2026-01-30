@@ -2,6 +2,7 @@ package com.emmadev.ecommerce.controller;
 
 import com.emmadev.ecommerce.DTO.ProductoCreateDTO;
 import com.emmadev.ecommerce.DTO.ProductoPublicResponseDTO;
+import com.emmadev.ecommerce.DTO.ProductoUpdateDTO;
 import com.emmadev.ecommerce.service.ProductoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +27,8 @@ public class ProductController {
         service.registrarProducto(dto);
     }
 
+    @PostMapping("/update")
+    public ProductoUpdateDTO actualizarProducto(@Valid @RequestBody ProductoUpdateDTO dto){
+        return service.updateProducto(dto);
+    }
 }

@@ -2,6 +2,7 @@ package com.emmadev.ecommerce.service;
 
 import com.emmadev.ecommerce.DTO.ProductoCreateDTO;
 import com.emmadev.ecommerce.DTO.ProductoPublicResponseDTO;
+import com.emmadev.ecommerce.DTO.ProductoUpdateDTO;
 import com.emmadev.ecommerce.entity.Categoria;
 import com.emmadev.ecommerce.entity.Producto;
 import com.emmadev.ecommerce.repository.ProductoRepository;
@@ -46,5 +47,22 @@ public class ProductoService {
         p.setExistencia(dto.getExistencia());
         p.setCategoria(servicioCategoria.findCategoria(dto.getIdCategoria()));
         repository.save(p);
+    }
+
+
+    @Transactional
+    public ProductoUpdateDTO updateProducto(ProductoUpdateDTO dto){
+       if(dto.getPrecioVenta().compareTo(dto.getPrecioCompra()) < 0){
+            throw  new IllegalArgumentException("El precio de compra no puede ser mayor al precio de venta");
+       }
+
+        Producto p = repository.findById(dto.getId()).
+                orElseThrow(()->new RuntimeException("Este producto no existe"));
+
+        p.setNombre(dto.getNombre());
+        p.setExistencia(dto.getExistencia());
+        p.setPrecioVenta(dto.getPrecioVenta());
+        p.setPrecioCompra(dto.getPrecioCompra());
+        return dto;
     }
 }
