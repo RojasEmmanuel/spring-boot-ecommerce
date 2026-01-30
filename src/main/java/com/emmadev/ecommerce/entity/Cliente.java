@@ -33,6 +33,7 @@ public class Cliente {
 
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
+
     private String operacion;
 
     @Column(name = "ultima_modificacion")
