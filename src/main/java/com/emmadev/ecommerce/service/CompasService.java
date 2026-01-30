@@ -56,11 +56,12 @@ public class CompasService {
         Compra compra = repository.findById(idCompra).
                 orElseThrow(()->new RuntimeException("No existe esta compra"));
 
-        if(estatus){
-            compra.setEstatus(EstatusVenta.FINALIZADA);
-        }else{
+        if (!estatus) {
             compra.setEstatus(EstatusVenta.CANCELADA);
         }
+
+        compra.setEstatus(EstatusVenta.FINALIZADA);
+
 
         repository.save(compra);
 
@@ -80,7 +81,6 @@ public class CompasService {
         if(! repository.existsById(idCompra)){
             throw  new IllegalArgumentException("Esta compra no existe");
         }
-
 
         repository.deleteById(idCompra);
     }
